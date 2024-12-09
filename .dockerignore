@@ -1,0 +1,6 @@
+node_modules
+npm-debug.log
+.env
+frontend/.next
+.vscode
+backend/src/data
