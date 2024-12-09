@@ -18,6 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import LogoutIcon from '@mui/icons-material/Logout';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { fetchTodos, addTodo, editTodo, deleteTodo, Todo } from '../api/todoApi';
 import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
@@ -155,18 +156,25 @@ const Dashboard = () => {
                   borderRadius: '4px',
                 }}
               >
-                <Box>
-                  <Typography variant="subtitle1">{todo.content}</Typography>
-                  <Typography variant="body2">Due: {todo.dueDate}</Typography>
-                  <Typography variant="body2">
-                    Completed: {todo.completedDate ? new Date(todo.completedDate).toLocaleString() : 'N/A'}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color={todo.status === 'Done' ? 'green' : 'red'}
-                  >
-                    Status: {todo.status}
-                  </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <Box sx={{ marginRight: 2 }}>
+                    {todo.status === 'Done' && (
+                      <CheckCircleIcon sx={{ color: 'green' }} />
+                    )}
+                  </Box>
+                  <Box>
+                    <Typography variant="subtitle1">{todo.content}</Typography>
+                    <Typography variant="body2">Due: {todo.dueDate}</Typography>
+                    <Typography variant="body2">
+                      Completed: {todo.completedDate ? new Date(todo.completedDate).toLocaleString() : 'N/A'}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color={todo.status === 'Done' ? 'green' : 'red'}
+                    >
+                      Status: {todo.status}
+                    </Typography>
+                  </Box>
                 </Box>
                 <Box>
                   <IconButton color="primary" onClick={() => handleOpenEdit(todo)}>
