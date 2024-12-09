@@ -2,6 +2,7 @@ import { Box, Button, TextField, Typography, Alert } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../context/AuthContext';
+import Link from 'next/link';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -71,6 +72,14 @@ const Login = () => {
           Login
         </Button>
       </form>
+      <Typography variant="body2" align="center">
+        Don't have an account?{' '}
+        <Link href="/register" passHref>
+          <Button variant="text" color="primary">
+            Register
+          </Button>
+        </Link>
+      </Typography>
     </Box>
   );
 };

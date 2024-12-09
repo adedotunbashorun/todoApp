@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Alert } from '@mui/material';
+import Link from 'next/link';
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -82,6 +83,14 @@ const Register = () => {
           Register
         </Button>
       </form>
+      <Typography variant="body2" align="center">
+       Already have an account?{' '}
+        <Link href="/login" passHref>
+          <Button variant="text" color="primary">
+            Login
+          </Button>
+        </Link>
+      </Typography>
     </Box>
   );
 };
