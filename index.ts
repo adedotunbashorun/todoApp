@@ -49,6 +49,10 @@ useExpressServer(app, {
 });
 // Prepare Next.js
 nextApp.prepare().then(() => {
+  // Redirect the base URL to the login page
+  app.get('/', (req, res) => {
+    res.redirect('/login');
+  });
   // Handle Next.js frontend
   app.all('*', (req, res) => handle(req, res));
 
