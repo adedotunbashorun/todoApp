@@ -1,3 +1,41 @@
+import Cookies from 'js-cookie';
+import { NextRouter } from 'next/router';
+
+/**
+ * A middleware wrapper for fetch that checks for a 401 response.
+ * If 401 is detected, it clears cookies and redirects to login.
+ *
+ * @param {string} url - The URL for the fetch request.
+ * @param {RequestInit} [options] - The options for the fetch request.
+ * @param {NextRouter} router - Next.js router instance for redirection.
+ * @returns {Promise<Response>} - The fetch response.
+ */
+const fetchMiddleware = async (
+  url: string,
+  options: RequestInit = {},
+  router: NextRouter
+): Promise<Response> => {
+  try {
+    const response = await fetch(url, options);
+
+    // Check if the status is 401
+    if (response.status === 401) {
+      // Clear cookies
+      Cookies.remove('auth_token');
+      Cookies.remove('user_id');
+      Cookies.remove('full_name');
+
+      // Redirect to login
+      router.push('/login');
+    }
+
+    return response;
+  } catch (error) {
+    console.error('Fetch middleware error:', error);
+    throw error; // Rethrow the error for higher-level error handling
+  }
+};
+
 export interface Todo {
   id: string;
   content: string;
@@ -7,11 +45,9 @@ export interface Todo {
 }
 
 // Fetch todos from the API
-export const fetchTodos = async (): Promise<Todo[]> => {
+export const fetchTodos = async (router: NextRouter): Promise<Todo[]> => {
   try {
-    const response = await fetch('/api/v1/todos/user', {
-      method: 'GET',
-    });
+    const response = await fetchMiddleware('/api/v1/todos/user', { method: 'GET' }, router);
     if (!response.ok) {
       throw new Error('Failed to fetch todos');
     }
@@ -24,15 +60,19 @@ export const fetchTodos = async (): Promise<Todo[]> => {
 };
 
 // Add a new todo
-export const addTodo = async (todoData: Todo): Promise<Todo | null> => {
+export const addTodo = async (todoData: Todo, router: NextRouter): Promise<Todo | null> => {
   try {
-    const response = await fetch('/api/v1/todos', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetchMiddleware(
+      '/api/v1/todos',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(todoData),
       },
-      body: JSON.stringify(todoData),
-    });
+      router
+    );
 
     if (!response.ok) {
       throw new Error('Failed to add todo');
@@ -47,16 +87,21 @@ export const addTodo = async (todoData: Todo): Promise<Todo | null> => {
 // Edit an existing todo
 export const editTodo = async (
   todoId: string,
-  todoData: Todo
+  todoData: Todo,
+  router: NextRouter
 ): Promise<Todo | null> => {
   try {
-    const response = await fetch(`/api/v1/todos/${todoId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetchMiddleware(
+      `/api/v1/todos/${todoId}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(todoData),
       },
-      body: JSON.stringify(todoData),
-    });
+      router
+    );
 
     if (!response.ok) {
       throw new Error('Failed to update todo');
@@ -68,23 +113,24 @@ export const editTodo = async (
   }
 };
 
-export const deleteTodo = async (
-  todoId: string,
-) => {
+// Delete a todo
+export const deleteTodo = async (todoId: string, router: NextRouter): Promise<void> => {
   try {
-    const response = await fetch(`/api/v1/todos/${todoId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetchMiddleware(
+      `/api/v1/todos/${todoId}`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
       },
-    });
+      router
+    );
 
     if (!response.ok) {
       console.log('Failed to delete todo');
     }
-    return;
   } catch (error) {
     console.error('Error deleting todo:', error);
-    return null;
   }
 };

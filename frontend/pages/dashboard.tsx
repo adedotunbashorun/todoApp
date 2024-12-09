@@ -49,7 +49,7 @@ const Dashboard = () => {
     const loadTodos = async () => {
       setLoading(true);
       try {
-        const fetchedTodos = await fetchTodos();
+        const fetchedTodos = await fetchTodos(router);
         setTodos(fetchedTodos);
       } catch (error) {
         console.error('Failed to fetch todos:', error);
@@ -64,7 +64,7 @@ const Dashboard = () => {
   const handleAddTodo = async () => {
     setOperationLoading(true);
     try {
-      const newTodo = await addTodo(todoForm as Todo);
+      const newTodo = await addTodo(todoForm as Todo, router);
       if (newTodo) setTodos([...todos, newTodo]);
       setIsAddOpen(false);
       setTodoForm({ content: '', dueDate: '', status: 'Unfinished' });
@@ -79,7 +79,7 @@ const Dashboard = () => {
     if (!selectedTodo) return;
     setOperationLoading(true);
     try {
-      const updatedTodo = await editTodo(selectedTodo.id, todoForm as Todo);
+      const updatedTodo = await editTodo(selectedTodo.id, todoForm as Todo, router);
       if (updatedTodo) {
         setTodos(todos.map((todo) => (todo.id === updatedTodo.id ? updatedTodo : todo)));
       }
@@ -96,7 +96,7 @@ const Dashboard = () => {
   const handleDeleteTodo = async (id: string) => {
     setOperationLoading(true);
     try {
-      await deleteTodo(id);
+      await deleteTodo(id, router);
       setTodos(todos.filter((todo) => todo.id !== id));
     } catch (error) {
       console.error('Error deleting todo:', error);
