@@ -24,7 +24,7 @@ import { useAuth } from '../context/AuthContext';
 import { useRouter } from 'next/router';
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, token } = useAuth();
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -35,7 +35,7 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    if (!user || !token) {
       router.push('/login');
     }
   }, [user, router]);

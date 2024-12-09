@@ -49,7 +49,8 @@ export const fetchTodos = async (router: NextRouter): Promise<Todo[]> => {
   try {
     const response = await fetchMiddleware('/api/v1/todos/user', { method: 'GET' }, router);
     if (!response.ok) {
-      throw new Error('Failed to fetch todos');
+      console.log('Failed to fetch todos');
+      return [];
     }
     const data = await response.json();
     return data.todos;
@@ -75,7 +76,8 @@ export const addTodo = async (todoData: Todo, router: NextRouter): Promise<Todo 
     );
 
     if (!response.ok) {
-      throw new Error('Failed to add todo');
+      console.log('Failed to add todo');
+      return null;
     }
     return await response.json();
   } catch (error) {
@@ -104,7 +106,8 @@ export const editTodo = async (
     );
 
     if (!response.ok) {
-      throw new Error('Failed to update todo');
+      console.log('Failed to update todo');
+      return null;
     }
     return await response.json();
   } catch (error) {

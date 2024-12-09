@@ -8,10 +8,10 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
-  const { user, login } = useAuth();
+  const { user, login, token } = useAuth();
 
   useEffect(() => {
-    if (user) {
+    if (user && token) {
       router.push('/dashboard');
     }
   }, [user, router]);
