@@ -40,7 +40,7 @@ A modern browser for accessing the app
 
 ```bash
 git clone https://github.com/adedotunbashorun/todoApp.git
-cd todo-app
+cd todoApp
 Install dependencies:
 
 npm install
