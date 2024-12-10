@@ -70,7 +70,6 @@ export class TodoController {
       await saveTodos(todos);
       return todo;
     } catch (error) {
-      console.error('Error updating todo:', error);
       return { success: false, message: 'Failed to update todo. Please try again later.' };
     }
   }
@@ -88,7 +87,6 @@ export class TodoController {
       await saveTodos(updatedTodos);
       return null
     } catch (error) {
-      console.error('Error deleting todo:', error);
       return { success: false, message: 'Failed to delete todo. Please try again later.' };
     }
   }

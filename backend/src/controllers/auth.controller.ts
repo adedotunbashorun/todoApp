@@ -4,7 +4,6 @@ import jwt from 'jsonwebtoken';
 import { v4 as uuidv4 } from 'uuid';
 import { UserSigninDto, UserSignupDto } from '../core/dtos/user.dto';
 import { User } from '../core/models/user.model';
-import { Response } from 'express';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'default_secret_key'; // Use environment variables in production
 const TOKEN_EXPIRY = process.env.TOKEN_EXPIRY || '1h';

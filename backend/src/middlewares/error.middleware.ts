@@ -9,7 +9,6 @@ export class ErrorHandlerMiddleware implements ExpressErrorMiddlewareInterface {
     res: Response,
     next: NextFunction
   ): void {
-    // console.error('Error caught by middleware:', error);
 
     const status = res.statusCode !== 200 ? res.statusCode : 500; // Default to 500 if no status is set
 
