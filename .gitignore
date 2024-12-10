@@ -4,5 +4,4 @@ dist
 frontend/.next
 frontend/next-env.d.ts
 .vscode
-backend/src/data/*
 .env
