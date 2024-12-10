@@ -1,7 +1,7 @@
-## ## Todo App
+## Todo App
 This is a full-stack Todo application designed for managing tasks efficiently. It includes both a backend API for handling the application logic and a frontend UI built with Next.js for an interactive user interface.
 
-## ## Project Structure
+## Project Structure
 ## Backend:
 
 Located in the backend folder.
@@ -30,7 +30,7 @@ User-friendly UI for managing todos.
 Responsive design for seamless experience on any device.
 Integration with backend APIs for real-time task updates.
 
-## ## Getting Started
+## Getting Started
 
 ## Prerequisites
 Node.js (v18+)
