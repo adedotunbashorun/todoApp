@@ -20,8 +20,7 @@ CRUD operations for todos (create, read, update, delete).
 Middleware for logging, error handling, and security.
 Documentation:
 
-## API documentation is available at Swagger Docs.
-Security:
+## Security:
 
 Includes protections against XSS and CSRF attacks.
 Secure headers and cookie management.
