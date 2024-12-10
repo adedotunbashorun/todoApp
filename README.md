@@ -44,6 +44,8 @@ cd todo-app
 Install dependencies:
 
 npm install
+
+cp .env.example .env
 ```
 
 ## Running the Application

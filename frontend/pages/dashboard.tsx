@@ -164,7 +164,7 @@ const Dashboard = () => {
                   </Box>
                   <Box>
                     <Typography variant="subtitle1">{todo.content}</Typography>
-                    <Typography variant="body2">Due: {todo.dueDate}</Typography>
+                    <Typography variant="body2">Due: {todo.dueDate || 'N/A'}</Typography>
                     <Typography variant="body2">
                       Completed: {todo.completedDate ? new Date(todo.completedDate).toLocaleString() : 'N/A'}
                     </Typography>

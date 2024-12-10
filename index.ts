@@ -10,6 +10,9 @@ import swaggerUi from 'swagger-ui-express';
 import cookieParser from 'cookie-parser';
 import next from 'next';
 import csurf from 'csurf';
+import { config } from 'dotenv';
+
+config();
 
 const app = express();
 const dev = process.env.NODE_ENV !== 'production';
@@ -74,7 +77,7 @@ nextApp.prepare().then(() => {
   // Handle Next.js frontend
   app.all('*', (req, res) => handle(req, res));
 
-  const PORT = 3000;
+  const PORT = process.env.PORT;
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
     console.log(`Swagger docs available at http://localhost:${PORT}/api/v1/docs`);

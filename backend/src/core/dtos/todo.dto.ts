@@ -53,7 +53,6 @@ export class CreateTodoDto {
     description: 'The due date of the Todo item',
     example: '2024-12-31T12:00:00Z',
   })
-  @IsDateString()
   @IsOptional()
   dueDate?: string;
 
