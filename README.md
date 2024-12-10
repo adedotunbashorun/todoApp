@@ -39,7 +39,7 @@ A modern browser for accessing the app
 ## Installation
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/adedotunbashorun/todoApp.git
 cd todo-app
 Install dependencies:
 
