@@ -42,6 +42,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.8",
     "@types/cors": "^2.8.17",
+    "@types/csurf": "^1.11.5",
     "@types/express": "^5.0.0",
     "@types/fs-extra": "^11.0.4",
     "@types/js-cookie": "^3.0.6",

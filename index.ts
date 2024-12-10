@@ -7,7 +7,9 @@ import { LoggingMiddleware, SameOriginMiddleware } from './backend/src/middlewar
 import { ErrorHandlerMiddleware } from './backend/src/middlewares/error.middleware';
 import { routingControllersToSpec } from 'routing-controllers-openapi';
 import swaggerUi from 'swagger-ui-express';
+import cookieParser from 'cookie-parser';
 import next from 'next';
+import csurf from 'csurf';
 
 const app = express();
 const dev = process.env.NODE_ENV !== 'production';
@@ -47,6 +49,22 @@ useExpressServer(app, {
     return req.user; // Return the user data attached by the auth middleware
   },
 });
+
+// Middleware for parsing cookies
+app.use(cookieParser());
+
+// Set up CSRF protection
+const csrfProtection = csurf({ cookie: true });
+app.use(csrfProtection);
+
+// Pass the CSRF token to frontend (e.g., in cookies or meta tags)
+app.use((req, res, next) => {
+  if (!res.headersSent) { // Ensure headers are not already sent
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+  }
+  next();
+});
+
 // Prepare Next.js
 nextApp.prepare().then(() => {
   // Redirect the base URL to the login page

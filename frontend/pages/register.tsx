@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Box, Button, TextField, Typography, Alert } from '@mui/material';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -24,11 +25,13 @@ const Register = () => {
       return;
     }
 
+    const csrfToken = Cookies.get('XSRF-TOKEN');
     try {
       const response = await fetch('/api/v1/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'XSRF-TOKEN': csrfToken || ''
         },
         body: JSON.stringify({ fullName: name, email, password }),
         credentials: 'include', // Ensures cookies are sent with the request

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from '../context/AuthContext';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,12 +21,13 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-
+    const csrfToken = Cookies.get('XSRF-TOKEN');
     try {
       const response = await fetch('/api/v1/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'XSRF-TOKEN': csrfToken || ''
         },
         body: JSON.stringify({ email, password }),
         credentials: 'same-origin',

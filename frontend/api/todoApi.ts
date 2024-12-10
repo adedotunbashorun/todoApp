@@ -15,8 +15,15 @@ const fetchMiddleware = async (
   options: RequestInit = {},
   router: NextRouter
 ): Promise<Response> => {
+  const csrfToken = Cookies.get('XSRF-TOKEN');
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        ...options.headers,
+        'XSRF-TOKEN': csrfToken || ''
+      }
+    });
 
     // Check if the status is 401
     if (response.status === 401) {
